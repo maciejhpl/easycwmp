@@ -5,9 +5,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=easycwmp
-PKG_VERSION:=1.8.1
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=http://easycwmp.org/download/
+PKG_VERSION:=master
+
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/maciejhpl/easycwmp.git
+PKG_SOURCE_VERSION:=25a1fc4bb4aa6fdb8ede7fd9006738937cdf719a
+PKG_MIRROR_HASH:=skip
 
 PKG_FIXUP:=autoreconf
 
