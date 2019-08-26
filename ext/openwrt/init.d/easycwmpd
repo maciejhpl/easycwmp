@@ -25,11 +25,15 @@ init_device_info() {
 	oval=$($UCI_GET easycwmp.@device[0].hardware_version)
 	[ -n "$val" ] && [ "$val" != "$oval" ] && { $UCI_SET easycwmp.@device[0].hardware_version="$val"; change=1; }
 
-	val=$(cat /etc/openwrt_version)
-	oval=$($UCI_GET easycwmp.@device[0].software_version)
-	[ -n "$val" ] && [ "$val" != "$oval" ] && { $UCI_SET easycwmp.@device[0].software_version="$val"; change=1; }
-	
-	#The same thing here for OUI and SerialNumber
+  if [ -f "/etc/image_version" ]; then
+	  val=$(cat /etc/image_version)
+	  oval=$($UCI_GET easycwmp.@device[0].software_version)
+	  [ -n "$val" ] && [ "$val" != "$oval" ] && { $UCI_SET easycwmp.@device[0].software_version="$val"; change=1; }
+	else
+	  val=$(cat /etc/openwrt_version)
+	  oval=$($UCI_GET easycwmp.@device[0].software_version)
+	  [ -n "$val" ] && [ "$val" != "$oval" ] && { $UCI_SET easycwmp.@device[0].software_version="$val"; change=1; }
+  fi
 
   val=$(< /sys/class/net/eth0/address sed 's/':'//g' | awk '{print substr(toupper($0),1,6)}')
 	oval=$($UCI_GET easycwmp.@device[0].oui)
